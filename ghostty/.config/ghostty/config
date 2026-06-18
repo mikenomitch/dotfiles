@@ -1,15 +1,29 @@
 # ~/.config/ghostty/config  —  minimal. Run `ghostty +show-config --default`
 # to see every default, and `ghostty +list-themes` to browse themes.
 
-theme = catppuccin-mocha
+# Custom Tomorrow Night Bright (vendored at themes/tomorrow-night-bright), pure
+# black background. Ghostty auto-loads theme files from this config dir's themes/.
+theme = tomorrow-night-bright
+background = 000000
+
 font-family = "Fira Code"
 font-size = 14
 
-background-opacity = 0.97
-background-blur = 20
+# Fira Code ships ligatures on by default — disable them. calt drives the
+# programming ligatures (==>, !=, ->, …); liga/dlig cover the rest.
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+# No transparency / blur — fully opaque window.
+background-opacity = 1
 
 # Native macOS tabs/splits
 macos-titlebar-style = tabs
+
+# Non-native (fast, borderless) fullscreen instead of macOS's native Spaces
+# fullscreen — no animation, plays nicely with AeroSpace.
+macos-non-native-fullscreen = true
 
 # Make ⌥ send a proper Alt/Meta in the terminal (useful for word-jumps, etc.).
 # AeroSpace intercepts only the alt-combos it binds (alt-h, alt-1, …) at the WM

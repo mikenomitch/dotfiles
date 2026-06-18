@@ -10,6 +10,15 @@ fish_add_path $HOME/.local/bin
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
 
+# --- Default editor ---
+# `zed` is a real wrapper on PATH (~/.local/bin/zed, from the `bin` stow package)
+# that uses Zed's bundled CLI, so `--wait` blocks correctly. Exported so child
+# processes (and tools that read $EDITOR) pick it up.
+set -gx EDITOR "zed --wait"
+
+# --- ripgrep: load flags from the config file (rg has no default path) ---
+set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/config
+
 if status is-interactive
     # --- Tool init (order matters: mise sets up PATH for shims) ---
     mise activate fish | source

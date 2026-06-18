@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ~/dotfiles/macos.sh  —  one-shot macOS system preferences. Run with: make macos
+# ~/dotfiles/macos.sh  —  one-shot macOS system preferences. Run with: mise run macos
 #
 # Idempotent: every line is a `defaults write` (or similar) that just re-asserts a
 # value, so running it again is harmless. Some changes need a logout/restart or an

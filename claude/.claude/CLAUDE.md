@@ -3,6 +3,12 @@
 Keep this file short — it loads into every session. Project-specific rules belong
 in that project's own `CLAUDE.md`.
 
+## Style
+
+- Be concise and direct. Lead with the change/answer; skip preamble.
+- Match existing patterns in the file before introducing new ones.
+- Prefer minimal, well-commented config over clever or sprawling config.
+
 ## My environment
 
 - **OS:** macOS (Apple Silicon), Homebrew at `/opt/homebrew`.
@@ -17,6 +23,19 @@ in that project's own `CLAUDE.md`.
   possibly stale — check current docs before writing wrangler config.
 - **Editor:** Zed. **Terminal:** Ghostty. **WM:** AeroSpace.
 
+## My default stack
+
+Reach for these unless a project's existing setup or lockfile says otherwise:
+
+- **Backend:** Rust.
+- **Frontend language:** TypeScript.
+- **Static sites:** Astro.
+- **UI framework:** Solid-JS by default; React is fine when it genuinely fits
+  better (e.g. a library or ecosystem piece that only React has).
+- **Interactive / SPA-like apps:** TanStack (Router / Query / Start).
+- **Styling:** Tailwind.
+- **Hosting:** Cloudflare Workers.
+
 ## My shell aliases & abbreviations (so commands/history don't confuse you)
 
 These are **fish interactive shortcuts only** — they do not exist in scripts or
@@ -29,52 +48,19 @@ Some standard commands are remapped in my interactive shell to modern tools:
 `du` → dust. **`cat` is plain `cat`** (no longer aliased) — `bat` is its own command.
 
 - git: `gs` status · `gd` diff · `gco` checkout · `gp` push · `gpl` pull · `gl` log · `lg` log --oneline --graph --decorate
+- git rebase/reset onto upstream: `gro` (fetch + rebase onto origin/<branch>) · `greset` (fetch + hard-reset to origin/<branch>, destructive)
 - pnpm: `pn` pnpm · `pnx` pnpm dlx · `pi` pnpm install · `pd` pnpm dev
 - `wr` wrangler · `cc` claude (Claude Code)
+- `killport <port>` kill the process listening on a TCP port (e.g. `killport 4000`)
 - dir bookmarks: `mark`/`jump`/`marks`/`unmark`/`setdef` (prwd-compat: `sw`/`gw`/`lw`)
 
-## Style
+## Keeping my setup reproducible (dotfiles + editors)
 
-- Be concise and direct. Lead with the change/answer; skip preamble.
-- Match existing patterns in the file before introducing new ones.
-- Prefer minimal, well-commented config over clever or sprawling config.
+All my machine/tool config lives in **`~/dotfiles`** (a git repo, stow-symlinked
+into `~/.config/**` and `~/.claude/**`), and I keep **Zed and VS Code in sync**.
 
-## Dotfiles — how to keep my setup reproducible (IMPORTANT)
-
-All machine/tool configuration lives in **`~/dotfiles`**, a git repo whose files are
-symlinked into place with **GNU stow**. So `~/.config/**` and `~/.claude/**` are
-symlinks that point *into* `~/dotfiles`.
-
-When you change any tool's configuration:
-
-1. **Edit the file in place** (e.g. `~/.config/mise/config.toml`). Because it's a
-   symlink, you're editing the real file inside `~/dotfiles` — never create a
-   second, divergent copy and never dereference the symlink.
-2. **Apply side effects:**
-   - changed `~/dotfiles/Brewfile` → run `brew bundle --file ~/dotfiles/Brewfile`
-   - changed mise config → run `mise install`
-   - added a brand-new config file/dir → `cd ~/dotfiles && stow <package>` to link it
-3. **Commit** in `~/dotfiles` with a clear message describing what changed and why.
-
-When adding a new tool: GUI apps and system CLIs go in the **Brewfile**; language
-runtimes and language-installed CLIs go in **mise** (`~/.config/mise/config.toml`).
-Keep everything captured in the repo so a fresh Mac is `git clone` + `make bootstrap`.
-
-## Editors: keep Zed and VS Code in sync
-
-I use both Zed and VS Code and want them to feel the same. When I ask you to change
-an editor setting, apply the equivalent change to **both** unless I say otherwise.
-The config files are:
-
-- Zed: `~/.config/zed/settings.json` (+ themes in `~/.config/zed/themes/`)
-- VS Code: `~/Library/Application Support/Code/User/settings.json`, with the
-  extension list in `~/dotfiles/vscode-extensions.txt` and the shared theme in
-  `~/dotfiles/vscode-theme/`.
-
-Setting equivalents to keep aligned: theme (Tomorrow Night Bright), Sublime
-keybindings, spaces with tab size 2 (Go stays on tabs via gofmt in both), format
-on save with Biome for JS/TS/CSS/JSON and Ruff for Python, fish as the integrated
-terminal, telemetry off, and the same font. When I add a language extension to one,
-add the counterpart to the other (e.g. Zed `toml` ↔ VS Code `tamasfe.even-better-toml`,
-Zed `biome` ↔ `biomejs.biome`, Zed `ruff` ↔ `charliermarsh.ruff`). After editing the
-VS Code extension list, remind me to run `make vscode`.
+**Read `~/.claude/dotfiles.md` before** you change any tool or editor configuration,
+install/remove a tool, or touch anything under `~/.config`, `~/.claude`, the
+`Brewfile`, mise config, or editor settings. That file has the rules for editing the
+real file in place (not the symlink), running the right side effect, committing, and
+mirroring settings across Zed and VS Code.

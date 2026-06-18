@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# ~/.local/bin/zed — guarantee `zed` opens Zed (stable, or Zed Preview if that's
+# what's installed) in every shell, including the sh that git/$EDITOR use.
+#
+# We exec the app's *bundled CLI* (…/Contents/MacOS/cli), not `open -a`, because
+# only the CLI honors `zed --wait` — which is our $EDITOR and git core.editor, so
+# it must block until the buffer is closed.
+set -euo pipefail
+
+app="Zed"
+[ -d "/Applications/Zed Preview.app" ] && app="Zed Preview"
+cli="/Applications/${app}.app/Contents/MacOS/cli"
+
+if [ -x "$cli" ]; then
+  exec "$cli" "$@"
+else
+  # Fallback if the app bundle moved: launch via LaunchServices (no --wait).
+  exec open -a "$app" "$@"
+fi

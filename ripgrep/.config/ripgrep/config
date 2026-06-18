@@ -1,0 +1,4 @@
+# ripgrep config — loaded via $RIPGREP_CONFIG_PATH (set in config.fish).
+# One CLI flag per line. Smart-case: case-insensitive unless the pattern
+# contains an uppercase letter.
+--smart-case

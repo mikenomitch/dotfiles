@@ -27,6 +27,8 @@
   "icon_theme": "Catppuccin Mocha",
   "buffer_font_family": "Fira Code",
   "buffer_font_size": 14,
+  // Fira Code ligatures off (calt drives the programming ligatures).
+  "buffer_font_features": { "calt": false },
   "ui_font_size": 15,
 
   // ---- Keybindings: Sublime Text (what you used via VSCode's Sublime keymap) ----
@@ -57,6 +59,7 @@
   "terminal": {
     "font_family": "Fira Code",
     "font_size": 14,
+    "font_features": { "calt": false },   // ligatures off, matching the editor
     "shell": { "program": "/opt/homebrew/bin/fish" }
   },
 

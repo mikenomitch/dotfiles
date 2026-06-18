@@ -1,6 +1,6 @@
-# VS Code extensions — install with:  make vscode
+# VS Code extensions — install with:  mise run vscode
 # (the Tomorrow Night Bright theme is NOT here; it's the local extension in
-#  vscode-theme/, copied into ~/.vscode/extensions by `make vscode`.)
+#  vscode-theme/, copied into ~/.vscode/extensions by `mise run vscode`.)
 ms-vscode.sublime-keybindings
 biomejs.biome
 charliermarsh.ruff

@@ -5,7 +5,7 @@
   "workbench.colorTheme": "Tomorrow Night Bright",
   "workbench.iconTheme": "material-icon-theme",
   "editor.fontFamily": "Fira Code, Menlo, monospace",
-  "editor.fontLigatures": true,
+  "editor.fontLigatures": false,
   "editor.fontSize": 14,
 
   // ---- Keybindings: Sublime (via the ms-vscode.sublime-keybindings extension) ----
@@ -46,6 +46,7 @@
   // ---- Terminal: fish ----
   "terminal.integrated.fontFamily": "Fira Code",
   "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontLigatures.enabled": false,
   "terminal.integrated.defaultProfile.osx": "fish",
   "terminal.integrated.profiles.osx": {
     "fish": { "path": "/opt/homebrew/bin/fish" }

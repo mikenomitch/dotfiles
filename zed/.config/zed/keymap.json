@@ -1,0 +1,32 @@
+// ~/.config/zed/keymap.json
+// JSONC (comments allowed). Layered on top of the SublimeText base_keymap set in
+// settings.json. Run `zed: open default keymap` to see every default binding.
+[
+  {
+    // Editor-focused bindings
+    "context": "Editor",
+    "bindings": {
+      // Jump to definition. NOTE: cmd-space is macOS Spotlight by default — you
+      // run Raycast as your launcher, so rebind/disable Spotlight's cmd-space
+      // (or point Raycast elsewhere) for this to reach Zed.
+      "cmd-space": "editor::GoToDefinition",
+
+      // VS Code-style code-nav muscle memory
+      "f12": "editor::GoToDefinition",
+      "shift-f12": "editor::FindAllReferences",
+      "f2": "editor::Rename",
+      "cmd-shift-o": "outline::Toggle", // "Go to Symbol in File"
+
+      // Inline AI edit (VS Code Copilot "Inline Chat" / Cursor cmd-k equivalent):
+      // pops the inline assistant to ask the LLM to edit the selection in place.
+      "cmd-i": "assistant::InlineAssist"
+    }
+  },
+  {
+    // Make the inline assistant reachable from the integrated terminal too.
+    "context": "Terminal",
+    "bindings": {
+      "cmd-i": "assistant::InlineAssist"
+    }
+  }
+]

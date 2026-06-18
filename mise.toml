@@ -1,0 +1,130 @@
+# ~/dotfiles/mise.toml — repo automation tasks (replaces the old Makefile).
+#
+# Why mise and not make: `make` isn't part of base macOS (it ships with the Xcode
+# Command Line Tools), and this repo depends on mise regardless — so the task
+# runner lives here. This file is repo-local (NOT stowed); the global runtime
+# config is the separate mise/.config/mise/config.toml.
+#
+# Usage from inside ~/dotfiles:  mise run link   ·   mise run doctor   ·   mise tasks
+# First-time setup on a fresh Mac:  ./bootstrap.sh
+
+[env]
+# Space-separated; word-split intentionally when passed to stow.
+STOW_PKGS = "mise starship fish ghostty aerospace zed claude vscode git ssh bin ripgrep"
+
+[tasks.preflight]
+description = "Fail early if the Brewfile needs the App Store but you're not signed in"
+run = '''
+if grep -q '^mas ' Brewfile; then
+  command -v mas >/dev/null 2>&1 || brew install mas
+  mas account >/dev/null 2>&1 || {
+    echo "✋ Brewfile has App Store (mas) apps but you're not signed in.";
+    echo "   Open the App Store app and sign in, then re-run. (Check: mas account)";
+    exit 1; }
+fi
+'''
+
+[tasks.brew]
+description = "Install Homebrew (if missing) + everything in the Brewfile"
+depends = ["preflight"]
+run = '''
+command -v brew >/dev/null 2>&1 || \
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew bundle --file=./Brewfile
+'''
+
+[tasks.predirs]
+description = "Ensure ~/.ssh and ~/.local/bin are real dirs so stow links into them, not over them"
+run = '''
+mkdir -p "$HOME/.ssh/control" && chmod 700 "$HOME/.ssh" "$HOME/.ssh/control"
+mkdir -p "$HOME/.local/bin"
+'''
+
+[tasks.link]
+description = "Symlink all config packages into $HOME"
+depends = ["predirs"]
+run = 'stow --target="$HOME" --verbose $STOW_PKGS'
+
+[tasks.relink]
+description = "Re-link after adding/removing files (safe to run repeatedly)"
+depends = ["predirs"]
+run = 'stow --restow --target="$HOME" --verbose $STOW_PKGS'
+
+[tasks.unlink]
+description = "Remove all symlinks this repo created"
+run = 'stow --delete --target="$HOME" --verbose $STOW_PKGS'
+
+[tasks.runtimes]
+description = "Install/refresh language runtimes declared in mise config"
+run = ['mise install', 'mise reshim']
+
+[tasks.shell]
+description = "Make fish the default shell (needs sudo to edit /etc/shells)"
+run = '''
+grep -qxF /opt/homebrew/bin/fish /etc/shells || echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
+'''
+
+[tasks.touchid]
+description = "Enable Touch ID for sudo via /etc/pam.d/sudo_local (needs sudo, idempotent)"
+run = '''
+if [ ! -f /etc/pam.d/sudo_local ] || ! grep -q 'pam_tid.so' /etc/pam.d/sudo_local; then
+  printf '# Written by ~/dotfiles (mise run touchid)\nauth       sufficient     pam_tid.so\n' | sudo tee /etc/pam.d/sudo_local >/dev/null
+  echo "✅ Touch ID for sudo enabled."
+else
+  echo "Touch ID for sudo already enabled."
+fi
+'''
+
+[tasks.macos]
+description = "Apply macOS system preferences (key repeat, Finder, Dock, screenshots, …)"
+run = 'bash ./macos.sh'
+
+[tasks.mcp]
+description = "Register user-scope MCP servers for Claude Code"
+run = '''
+echo "Registering user-scope MCP servers for Claude Code..."
+# GitHub (remote, OAuth):
+claude mcp add --scope user --transport http github https://api.githubcopilot.com/mcp/ || true
+# Cloudflare: install their official skills+MCP plugin instead of hand-adding URLs:
+#   npx skills add https://github.com/cloudflare/skills
+echo "Run 'claude mcp list' to verify."
+'''
+
+[tasks.vscode]
+description = "Install VS Code extensions + the local Tomorrow Night Bright theme"
+run = '''
+CODE="$(command -v code || echo '/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code')"
+test -x "$CODE" || { echo "VS Code 'code' CLI not found. Open VS Code → Command Palette → 'Shell Command: Install code command in PATH', then rerun."; exit 1; }
+grep -vE '^\s*#|^\s*$' vscode-extensions.txt | while read -r ext; do "$CODE" --install-extension "$ext" --force; done
+# Local theme: copy (not symlink — VS Code is finicky about symlinked extensions)
+mkdir -p "$HOME/.vscode/extensions/mikenomitch.tomorrow-night-bright-1.0.0"
+cp -R vscode-theme/ "$HOME/.vscode/extensions/mikenomitch.tomorrow-night-bright-1.0.0/"
+echo "✅ VS Code extensions + theme installed. Reload VS Code."
+'''
+
+[tasks.update]
+description = "Pull latest, update packages, re-link"
+run = '''
+git pull --rebase
+brew bundle --file=./Brewfile
+mise upgrade
+mise run relink
+'''
+
+[tasks.doctor]
+description = "Sanity check: tools on PATH + stow symlink health"
+run = '''
+echo "── tools ──────────────────────────────────────────"
+for t in brew mise fish starship stow claude uv; do
+  printf '%-9s %s\n' "$t:" "$(command -v "$t" || echo MISSING)"
+done
+echo "── symlinks (stow dry-run; no output below = all healthy) ──"
+mkdir -p "$HOME/.ssh/control" && chmod 700 "$HOME/.ssh" "$HOME/.ssh/control"
+mkdir -p "$HOME/.local/bin"
+stow --no --target="$HOME" --verbose=2 $STOW_PKGS 2>&1 \
+  | grep -vE '^(LINK|stow dir|cwd|Planning|No differences)' || true
+echo "── sudo ───────────────────────────────────────────"
+grep -q 'pam_tid.so' /etc/pam.d/sudo_local 2>/dev/null \
+  && echo "Touch ID for sudo: enabled" || echo "Touch ID for sudo: NOT set (run: mise run touchid)"
+'''

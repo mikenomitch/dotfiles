@@ -38,6 +38,14 @@ brew "mkcert"                # local HTTPS certs
 brew "nss"                   # needed by mkcert for Firefox
 brew "mas"                   # Mac App Store CLI (for App Store-only apps)
 
+# ---- Build tools / media / networking ---------------------------------------
+brew "make"                  # GNU make (newer than Apple's; not guaranteed on a fresh Mac)
+brew "cmake"                 # C/C++ build-system generator
+brew "ffmpeg"                # audio/video transcoding & processing
+brew "tree"                  # recursive directory listing
+brew "socat"                 # multipurpose socket relay (TCP/UDP/UNIX)
+brew "websocat"              # WebSocket client/server CLI (curl for ws://)
+
 # ---- Terminal / editor / launcher ------------------------------------------
 cask "ghostty"               # terminal
 cask "zed"                   # editor
@@ -51,16 +59,14 @@ cask "homerow"                    # keyboard-driven clicking — "Vimium for all
 cask "jordanbaird-ice"            # menu-bar manager (free Bartender alternative)
 
 # ---- Keep awake -------------------------------------------------------------
-cask "keepingyouawake"       # brew-installable keep-awake. (Amphetamine is more
-                             # powerful but App Store-only — see mas line below.)
-# mas "Amphetamine", id: 937984704
+# Nothing to install: macOS ships the built-in `caffeinate` CLI (e.g.
+# `caffeinate -d` to keep the display awake), and Raycast has a Keep-Awake
+# command on top of it. No KeepingYouAwake / Amphetamine needed.
 
 # ---- Containers / infra / web -----------------------------------------------
 cask "orbstack"              # Docker Desktop replacement — far lighter & faster
-cask "tailscale"             # private mesh network across your machines
 cask "proxyman"              # HTTP(S) debugging proxy
 cask "tableplus"             # database GUI
-cask "cleanshot"             # screenshots/recording (paid, excellent)
 
 # ---- Browser ----------------------------------------------------------------
 cask "google-chrome"
@@ -80,5 +86,4 @@ cask "font-fira-code"        # plain Fira Code (ligatures, no patched glyph icon
 # Bear (notes) is App Store-only; there is no Homebrew cask for the notes app
 # (the `bear` formula is an unrelated C/C++ build tool, so don't use that).
 mas "Bear", id: 1091189122
-# mas "Amphetamine", id: 937984704
 # =============================================================================

@@ -9,12 +9,12 @@
 # --- Language runtimes ---
 node   = "lts"          # use "lts" globally; pin exact versions per-project
 python = "3.13"
-# go   = "latest"
-# rust = "latest"       # (or install via rustup if you prefer)
+go     = "latest"
+rust   = "latest"       # mise installs via rustup under the hood
 
 # --- JS package managers / runtimes ---
 pnpm = "latest"         # your default
-# bun = "latest"        # uncomment to also have bun as a runtime/test runner
+bun  = "latest"         # alternative runtime / fast test runner & package manager
 
 # --- Globally-available CLIs installed from the npm registry ---
 # The "npm:" backend installs the package and shims it onto PATH, version-pinned.
@@ -27,4 +27,4 @@ pnpm = "latest"         # your default
 idiomatic_version_file_enable_tools = ["node"]   # read .nvmrc / .node-version too
 # Supply-chain safety: ignore brand-new releases for 3 days (catches compromised
 # publishes). Comment out if you ever need a same-day release.
-# minimum_release_age = "3d"
+minimum_release_age = "3d"
