@@ -1,0 +1,21 @@
+# ~/.config/ghostty/config  —  minimal. Run `ghostty +show-config --default`
+# to see every default, and `ghostty +list-themes` to browse themes.
+
+theme = catppuccin-mocha
+font-family = "Fira Code"
+font-size = 14
+
+background-opacity = 0.97
+background-blur = 20
+
+# Native macOS tabs/splits
+macos-titlebar-style = tabs
+
+# Make ⌥ send a proper Alt/Meta in the terminal (useful for word-jumps, etc.).
+# AeroSpace intercepts only the alt-combos it binds (alt-h, alt-1, …) at the WM
+# level; everything else passes through to Ghostty, so there's no conflict.
+macos-option-as-alt = true
+
+# Quality of life
+copy-on-select = true
+window-save-state = always

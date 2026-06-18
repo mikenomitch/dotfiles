@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+
+  "//": "User-scope settings — apply to every project. Project repos can add a",
+  "//2": ".claude/settings.json that MERGES with this (allow[]/hooks concatenate).",
+
+  "//model": "Set your default with /model in-session, or uncomment below:",
+  "//model_value": "\"model\": \"claude-opus-4-8\",",
+
+  "permissions": {
+    "//": "default | acceptEdits | plan | bypassPermissions. acceptEdits auto-applies file edits but still asks before running commands.",
+    "defaultMode": "acceptEdits",
+
+    "allow": [
+      "Read",
+      "Edit",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(mise:*)",
+      "Bash(pnpm:*)",
+      "Bash(node:*)",
+      "Bash(wrangler:*)",
+      "Bash(brew:*)",
+      "Bash(stow:*)",
+      "Bash(rg:*)",
+      "Bash(fd:*)",
+      "Bash(eza:*)",
+      "Bash(bat:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(jq:*)"
+    ],
+
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/.env)",
+      "Read(./secrets/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Bash(rm -rf:*)"
+    ]
+  },
+
+  "includeCoAuthoredBy": false,
+  "cleanupPeriodDays": 30,
+  "env": {}
+}

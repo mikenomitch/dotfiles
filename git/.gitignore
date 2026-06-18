@@ -1,0 +1,8 @@
+# ~/.gitignore  —  global ignores (wired up via core.excludesfile in ~/.gitconfig)
+# Keep this short: things that should NEVER be committed from ANY repo.
+
+# macOS cruft
+.DS_Store
+
+# Zed project-local config
+.zed/

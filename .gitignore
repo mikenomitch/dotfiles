@@ -1,0 +1,5 @@
+# macOS cruft
+.DS_Store
+
+# Claude Code session-local settings (machine-specific, not a dotfile)
+.claude/settings.local.json

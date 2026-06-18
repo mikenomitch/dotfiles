@@ -1,0 +1,30 @@
+# ~/.config/mise/config.toml  —  global runtimes + globally-installed CLIs
+# Reproducible: this file IS the source of truth. On a new machine, `mise install`
+# rebuilds everything. Per-project overrides go in a local mise.toml that wins
+# over this one automatically when you cd in.
+#
+# Docs: https://mise.jdx.dev
+
+[tools]
+# --- Language runtimes ---
+node   = "lts"          # use "lts" globally; pin exact versions per-project
+python = "3.13"
+# go   = "latest"
+# rust = "latest"       # (or install via rustup if you prefer)
+
+# --- JS package managers / runtimes ---
+pnpm = "latest"         # your default
+# bun = "latest"        # uncomment to also have bun as a runtime/test runner
+
+# --- Globally-available CLIs installed from the npm registry ---
+# The "npm:" backend installs the package and shims it onto PATH, version-pinned.
+"npm:@anthropic-ai/claude-code" = "latest"   # Claude Code, managed by mise
+"npm:wrangler"                  = "latest"   # Cloudflare Workers CLI
+# "npm:@biomejs/biome"          = "latest"   # if you want biome on PATH globally
+
+[settings]
+# Quality-of-life
+idiomatic_version_file_enable_tools = ["node"]   # read .nvmrc / .node-version too
+# Supply-chain safety: ignore brand-new releases for 3 days (catches compromised
+# publishes). Comment out if you ever need a same-day release.
+# minimum_release_age = "3d"

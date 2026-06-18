@@ -1,0 +1,77 @@
+// ~/.config/zed/settings.json
+// JSONC (comments allowed). Run `zed: open default settings` to see every option.
+{
+  "$schema": "https://zed.dev/schema/settings/zed.json",
+
+  // ---- Extensions: declared here = auto-installed on launch (reproducible) ----
+  // Most of your languages need NOTHING here — TypeScript/TSX, JavaScript, Go,
+  // Rust, CSS, HTML, Tailwind, JSON and Markdown all ship built in. Below are the
+  // few that aren't built in, plus tooling/icons.
+  "auto_install_extensions": {
+    "catppuccin-icons": true,  // file icon theme (independent of the color theme)
+    "toml": true,              // you edit a lot of .toml (mise/aerospace/starship/wrangler)
+    "dockerfile": true,
+    "docker-compose": true,
+    "biome": true,             // fast lint+format for JS/TS (ESLint+Prettier replacement)
+    "ruff": true,              // Python lint+format
+    "env": true,               // .env highlighting
+    "html": true,
+    "git-firefly": true        // inline blame / nicer git
+  },
+
+  // ---- Appearance ----
+  // Your Tomorrow theme family (your fork, vendored into this repo at
+  // zed/.config/zed/themes/tomorrow.json). Provides the "Tomorrow Night Bright"
+  // variant plus Night, Night Blue, Night Out, at Midnight, and the light "Tomorrow".
+  "theme": "Tomorrow Night Bright",
+  "icon_theme": "Catppuccin Mocha",
+  "buffer_font_family": "Fira Code",
+  "buffer_font_size": 14,
+  "ui_font_size": 15,
+
+  // ---- Keybindings: Sublime Text (what you used via VSCode's Sublime keymap) ----
+  "base_keymap": "SublimeText",
+
+  // ---- Editing ----
+  "vim_mode": false,
+  "relative_line_numbers": false,
+  "hard_tabs": false,                 // spaces, not tabs
+  "tab_size": 2,
+  "format_on_save": "on",
+  "remove_trailing_whitespace_on_save": true,
+  "soft_wrap": "editor_width",
+  "tabs": { "git_status": true, "file_icons": true },
+
+  // ---- Per-language formatters ----
+  // Note: Go is formatted by gofmt/gopls, which always uses tabs — that's correct
+  // Go style and intentionally ignores hard_tabs. Everything else uses spaces.
+  "languages": {
+    "JavaScript": { "formatter": "language_server", "code_actions_on_format": { "source.fixAll.biome": true } },
+    "TypeScript": { "formatter": "language_server", "code_actions_on_format": { "source.fixAll.biome": true } },
+    "TSX":        { "formatter": "language_server", "code_actions_on_format": { "source.fixAll.biome": true } },
+    "CSS":        { "formatter": "language_server" },
+    "Python":     { "format_on_save": "on", "formatter": "language_server" }
+  },
+
+  // ---- Terminal ----
+  "terminal": {
+    "font_family": "Fira Code",
+    "font_size": 14,
+    "shell": { "program": "/opt/homebrew/bin/fish" }
+  },
+
+  // ---- AI agent: reuse your Claude Code config ----
+  // This runs Claude Code over ACP via the official adapter. With no CLAUDE_CONFIG_DIR
+  // set, the adapter reads ~/.claude by default — so it uses the SAME CLAUDE.md,
+  // settings.json, hooks and MCP servers as your Claude Code CLI. Start a thread from
+  // the Agent Panel (cmd-?) → "+" → Claude Code.
+  // (To point it at a different config dir, add env: { "CLAUDE_CONFIG_DIR": "/abs/path" }.)
+  "agent_servers": {
+    "Claude Code": {
+      "command": "npx",
+      "args": ["@agentclientprotocol/claude-agent-acp@latest"]
+    }
+  },
+
+  "telemetry": { "metrics": false, "diagnostics": false }
+}

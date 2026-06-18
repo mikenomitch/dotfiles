@@ -1,0 +1,59 @@
+// ~/Library/Application Support/Code/User/settings.json
+// Mirrors the Zed config: Tomorrow Night Bright, Sublime keymap, spaces, Biome/Ruff.
+{
+  // ---- Appearance (theme is the local extension in this repo: vscode-theme/) ----
+  "workbench.colorTheme": "Tomorrow Night Bright",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.fontFamily": "Fira Code, Menlo, monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 14,
+
+  // ---- Keybindings: Sublime (via the ms-vscode.sublime-keybindings extension) ----
+  // No Vim extension installed — vim navigation off, matching Zed.
+
+  // ---- Editing: spaces, format on save ----
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.lineNumbers": "on",
+  "editor.renderWhitespace": "selection",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+
+  // ---- Per-language formatters (Biome for web, Ruff for Python) ----
+  "[javascript]":      { "editor.defaultFormatter": "biomejs.biome" },
+  "[javascriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[typescript]":      { "editor.defaultFormatter": "biomejs.biome" },
+  "[typescriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[json]":            { "editor.defaultFormatter": "biomejs.biome" },
+  "[jsonc]":           { "editor.defaultFormatter": "biomejs.biome" },
+  "[css]":             { "editor.defaultFormatter": "biomejs.biome" },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  // Go uses tabs (gofmt/gopls enforce it) — same intentional exception as Zed.
+  "[go]": { "editor.insertSpaces": false },
+
+  // ---- Terminal: fish ----
+  "terminal.integrated.fontFamily": "Fira Code",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.defaultProfile.osx": "fish",
+  "terminal.integrated.profiles.osx": {
+    "fish": { "path": "/opt/homebrew/bin/fish" }
+  },
+
+  // ---- Misc ----
+  "telemetry.telemetryLevel": "off",
+  "update.mode": "manual",
+  "explorer.confirmDragAndDrop": false,
+  "workbench.startupEditor": "none"
+}

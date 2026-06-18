@@ -1,0 +1,104 @@
+# ~/.config/aerospace/aerospace.toml
+# i3-style tiling. Default modifier is alt (⌥). Full reference:
+# https://nikitabobko.github.io/AeroSpace/guide
+
+start-at-login = true
+
+# Normalize the tree so layouts stay predictable
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'   # wide screens tile horizontally
+
+# Run on startup (e.g. start a status bar). Empty by default.
+after-startup-command = []
+
+# Gaps between windows and screen edges
+[gaps]
+inner.horizontal = 8
+inner.vertical   = 8
+outer.left       = 8
+outer.bottom     = 8
+outer.top        = 8
+outer.right      = 8
+
+# ---- Main mode bindings -----------------------------------------------------
+[mode.main.binding]
+
+# Focus (vim keys)
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move the focused window
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Layouts
+alt-slash = 'layout tiles horizontal vertical'      # toggle tiling orientation
+alt-comma = 'layout accordion horizontal vertical'  # accordion (stacked) layout
+alt-f     = 'fullscreen'
+
+# Resize the focused window
+alt-minus = 'resize smart -50'
+alt-equal = 'resize smart +50'
+
+# Workspaces 1–9
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+alt-tab = 'workspace-back-and-forth'   # jump to previous workspace
+
+# Move focused window to a workspace
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+
+# Multi-monitor
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# ---- ⌘+⌥ chord (the two keys right of the space bar) ------------------------
+# The two keys just right of the space bar are Right ⌘ and Right ⌥, which
+# AeroSpace sees as the generic cmd + alt modifiers. NOTE: AeroSpace can't tell
+# left modifiers from right ones, so these also fire from Left ⌘ + Left ⌥.
+cmd-alt-f     = 'fullscreen'                                          # ⌘⌥-f → fullscreen
+cmd-alt-left  = 'move-node-to-monitor --focus-follows-window left'    # ⌘⌥-← → window to left screen
+cmd-alt-right = 'move-node-to-monitor --focus-follows-window right'   # ⌘⌥-→ → window to right screen
+cmd-alt-up    = 'move-node-to-monitor --focus-follows-window up'      # ⌘⌥-↑ → window to screen above
+cmd-alt-down  = 'move-node-to-monitor --focus-follows-window down'    # ⌘⌥-↓ → window to screen below
+
+# Enter "service" mode for less-common actions
+alt-shift-semicolon = 'mode service'
+
+# ---- Service mode (one-shot actions, esc to return) -------------------------
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r   = ['flatten-workspace-tree', 'mode main']   # reset layout
+f   = ['layout floating tiling', 'mode main']   # toggle floating for the window
+backspace = ['close-all-windows-but-current', 'mode main']
+
+# ---- Per-app rules: float utility windows instead of tiling them ------------
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
