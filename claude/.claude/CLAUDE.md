@@ -78,24 +78,6 @@ Reach for these unless a project's existing setup or lockfile says otherwise:
 - **Styling:** Tailwind.
 - **Hosting:** Cloudflare Workers.
 
-## My shell aliases & abbreviations (so commands/history don't confuse you)
-
-These are **fish interactive shortcuts only**. They do not exist in scripts or
-non-interactive shells. When you write scripts or run commands yourself, use the
-canonical binaries (`grep`, `find`, `cat`, `cd`), not these. This list is so you can
-*read* my commands and history correctly.
-
-Some standard commands are remapped in my interactive shell to modern tools:
-`ls`/`ll`/`lt` → eza, `cd` → zoxide (`z`), `find` → fd, `grep` → rg, `top` → btop,
-`du` → dust. **`cat` is plain `cat`** (no longer aliased). `bat` is its own command.
-
-- git: `gs` status · `gd` diff · `gco` checkout · `gp` push · `gpl` pull · `gl` log · `lg` log --oneline --graph --decorate
-- git rebase/reset onto upstream: `gro` (fetch + rebase onto origin/<branch>) · `greset` (fetch + hard-reset to origin/<branch>, destructive)
-- pnpm: `pn` pnpm · `pnx` pnpm dlx · `pi` pnpm install · `pd` pnpm dev
-- `wr` wrangler · `cc` claude (Claude Code)
-- `killport <port>` kill the process listening on a TCP port (e.g. `killport 4000`)
-- dir bookmarks: `mark`/`jump`/`marks`/`unmark`/`setdef` (prwd-compat: `sw`/`gw`/`lw`)
-
 ## Keeping my setup reproducible (dotfiles + editors)
 
 All my machine/tool config lives in **`~/dotfiles`** (a git repo, stow-symlinked
