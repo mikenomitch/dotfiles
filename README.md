@@ -16,7 +16,7 @@ configs are symlinked into place with GNU stow; a fresh Mac is two commands.
 | AeroSpace | tiling WM | `aerospace/.config/aerospace/aerospace.toml` |
 | Zed | editor (+ extensions) | `zed/.config/zed/settings.json` |
 | VS Code | editor (mirrors Zed) | `vscode/Library/.../Code/User/settings.json`, `vscode-extensions.txt`, `vscode-theme/` |
-| Claude Code | global agent config | `claude/.claude/{settings.json,CLAUDE.md,dotfiles.md}` |
+| Claude Code | global agent config (+ on-demand skills) | `claude/.claude/{settings.json,CLAUDE.md,dotfiles.md,skills/}` |
 | marks | dir bookmarks (prwd replacement) | `fish/.config/fish/conf.d/marks.fish` |
 | SSH | non-secret client config (keys stay out) | `ssh/.ssh/config` |
 | bin | personal scripts on `PATH` (e.g. the `zed` launcher wrapper) | `bin/.local/bin/` |

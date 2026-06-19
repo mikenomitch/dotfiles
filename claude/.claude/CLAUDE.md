@@ -1,55 +1,39 @@
 # Global instructions (apply to every project)
 
 Keep this file short. It loads into every session. Project-specific rules belong
-in that project's own `CLAUDE.md`.
+in that project's own `CLAUDE.md`. Anything only *sometimes* relevant belongs in a
+skill, not here.
 
 ## General
 
 - Agree or disagree directly, then move on. Skip filler like "you're absolutely right."
 - Bring opinions, e.g. "recommend B because x, y, z." Present options when prudent.
-- Be concise. Avoid long walls of text.
+- Default to bullets and short answers. Expand to prose only when asked.
 - Link to sources when appropriate.
 
 ## Code, git, and testing
 
-- Write maintainable code over clever code. Leave codebases better than you found them.
-- Match existing patterns in the file before introducing new ones.
-- Prefer minimal, well-commented config over clever or sprawling config.
-- Prefer inlining over premature abstraction.
-- Comments explain why (and what only when something might be confusing).
-- Fix type errors at the source. No casting to suppress them.
-- Minimize new dependencies unless agreed upon. Include lockfiles in any commit that changes dependencies.
-- Keep commit messages short and imperative: "add usage example to README", not "feat(docs): add usage example".
-- Do not commit directly to main/master unless asked. Use a workspace (worktree) by default for new work. Use a branch if checking out a PR or already on a non-main branch.
-- STOP and confirm before committing, pushing, or creating/updating PRs. Do not assume prior approval continues to apply.
-- Prefer the gh CLI for PRs and issues.
-- Use short sentences and bullet points in PR/issue descriptions. No markdown headers unless asked.
-- Do not list changed files in a PR. The diff already shows that.
+- **STOP and confirm before committing, pushing, or creating/updating PRs.** Do not
+  assume prior approval continues to apply.
+- **Never commit directly to main/master unless asked.** Use a workspace (worktree) by
+  default for new work. Use a branch if checking out a PR or already on a non-main branch.
+- After a series of edits, run the typecheck/build and fix any errors at the source
+  (no casting to suppress them). Prefer running single tests over the whole suite.
+- Match existing patterns in the file before introducing new ones. Prefer inlining over
+  premature abstraction.
+- Prefer minimal, well-commented config over clever or sprawling config. Comments
+  explain why (and what only when something might be confusing).
+- Minimize new dependencies unless agreed upon. Include lockfiles in any commit that
+  changes dependencies.
+- Keep commit messages short and imperative: "add usage example to README", not
+  "feat(docs): add usage example".
+- Prefer the gh CLI for PRs and issues. When writing a PR or issue, follow the
+  `pull-requests` skill.
 
-PRs follow this structure:
+## Writing
 
-- Short opening sentence describing the fix or feature.
-- Explain the issue with concrete context.
-- (optional) Show real-world data or code demonstrating the problem.
-- Bullet points showing the major functional changes.
-- Code snippet showing the user-facing result (if applicable).
-- Brief mention of docs, tests, etc. as applicable.
-
-## Docs and writing
-
-- Act as my editor, not my replacement. Preserve the original voice and structure. Keep edits small unless asked otherwise.
-- Use imperative mood, American English.
-- Lead with the problem or context before the solution. Explain the why, not just the what.
-- Use "we" for collaboration, "you" to address the reader.
-- Keep paragraphs to 2-5 sentences.
-- Prefer bullet points over numbered lists unless order matters.
-- Be direct and opinionated. Acknowledge tradeoffs honestly.
-- Reframe complex points to aid comprehension. Use rhetorical questions sparingly.
-- Link liberally to sources, docs, and references.
-- Prefer AP style unless the project has an existing convention.
-- Avoid marketing speak: "perfect for", "empowers you to", "modernization".
-- Avoid LLM tells: "not X but Y", many sentence fragments in a row, grandiose but vague bold claims.
-- Avoid both em-dashes and semicolons.
+- When writing or editing prose, docs, or any human-readable copy, follow the
+  `writing` skill.
 
 ## My environment
 
@@ -67,7 +51,7 @@ PRs follow this structure:
 
 ## My default stack
 
-Reach for these unless a project's existing setup or lockfile says otherwise:
+For **new projects only** — always defer to a project's existing setup or lockfile:
 
 - **Backend:** Rust.
 - **Frontend language:** TypeScript.
